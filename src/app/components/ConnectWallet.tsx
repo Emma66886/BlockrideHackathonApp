@@ -54,7 +54,7 @@ export default function ConnectWallet(props: Props) {
 }
 
 const Container = styled.div`
-  padding: 20px;
+  padding: 20px 30px 20px 30px;
   display: flex;
 `;
 

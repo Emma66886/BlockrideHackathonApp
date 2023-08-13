@@ -136,7 +136,7 @@ const Container = styled.div`
 Container.displayName = "ModalContainer";
 
 const DialogContent = styled.div`
-  ${tw`overflow-hidden  max-h-[60vh] max-w-full rounded-[8px] w-[30%] mobile:rounded-b-none bg-black shadow-[0px 0px 4px rgba(0, 0, 0, 0.1), 0px 8px 40px rgba(0, 0, 0, 0.2)]`};
+  ${tw`overflow-hidden  max-h-[60vh] max-w-full rounded-[8px] mobile:rounded-b-none bg-black shadow-[0px 0px 4px rgba(0, 0, 0, 0.1), 0px 8px 40px rgba(0, 0, 0, 0.2)]`};
 
   ${tw`flex flex-col`};
 

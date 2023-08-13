@@ -2,9 +2,7 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "@/*": ["app/*"],
-      "crypto": ["node_modules/crypto-browserify"],
-      "stream": ["node_modules/stream-browserify"]
+      "@/*": ["app/*"]
     }
   },
   "include": ["src"]
