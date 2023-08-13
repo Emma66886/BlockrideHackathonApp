@@ -3,6 +3,9 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      height: {
+        page: "calc(100vh - 64px)",
+      },
       screens: {
         smalldesktop: { max: "1024px" }, // small desktop
         tablet: { max: "768px" },

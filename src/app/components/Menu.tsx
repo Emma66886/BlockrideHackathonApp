@@ -1,10 +1,14 @@
 import { Menu } from "@headlessui/react";
+import useModalState from "app/hooks/useModalState";
 import { NavLink } from "react-router-dom";
 import { styled } from "twin.macro";
 
 import { ReactComponent as MenuIcon } from "../assets/icons/menu.svg";
+import ConnectWallet from "./ConnectWallet";
 
 export default function MyMenu() {
+  const { isOpen, closeModal, openModal } = useModalState();
+
   return (
     <Menu>
       <Menu.Button>
@@ -18,9 +22,12 @@ export default function MyMenu() {
           <NavLink to="">Dashboard</NavLink>
         </Menu.Item>
         <Menu.Item>
-          <button className="button">Connect Wallet</button>
+          <button className="button" onClick={openModal}>
+            Connect Wallet
+          </button>
         </Menu.Item>
       </Menu.Items>
+      <ConnectWallet open={isOpen} closeModal={closeModal} />
     </Menu>
   );
 }

@@ -5,8 +5,15 @@ import { ReactComponent as Logo } from "app/assets/icons/logo.svg";
 
 import Footer from "./Footer";
 import Menu from "app/components/Menu";
+import useModalState from "app/hooks/useModalState";
+import ConnectWallet from "./ConnectWallet";
+import { useWallet } from "@solana/wallet-adapter-react";
+// import ProfileDropdown from "./ProfileDropdown";
 
 export default function DashBoardLayout() {
+  const { isOpen, closeModal, openModal } = useModalState();
+
+  const { publicKey } = useWallet();
   return (
     <>
       <Header>
@@ -23,7 +30,10 @@ export default function DashBoardLayout() {
             <Menu />
           </div>
           <div className="action">
-            <button>Connect Wallet</button>
+            <button onClick={openModal}>
+              {" "}
+              {publicKey ? "Disconnect Wallet" : "Connect Wallet"}
+            </button>
           </div>
         </div>
       </Header>
@@ -31,6 +41,7 @@ export default function DashBoardLayout() {
       <Outlet />
 
       <Footer />
+      <ConnectWallet open={isOpen} closeModal={closeModal} />
     </>
   );
 }
