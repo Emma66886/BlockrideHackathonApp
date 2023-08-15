@@ -10,10 +10,7 @@ import {
 } from "@solana/wallet-adapter-react";
 import { useMemo } from "react";
 import {
-  GlowWalletAdapter,
   PhantomWalletAdapter,
-  SolflareWalletAdapter,
-  MathWalletAdapter,
   BackpackWalletAdapter,
 } from "@solana/wallet-adapter-wallets";
 import { clusterApiUrl } from "@solana/web3.js";
@@ -22,13 +19,7 @@ import Routes from "./routes";
 
 function App() {
   const wallets = useMemo(
-    () => [
-      new PhantomWalletAdapter(),
-      new SolflareWalletAdapter(),
-      new GlowWalletAdapter(),
-      new MathWalletAdapter(),
-      new BackpackWalletAdapter(),
-    ],
+    () => [new PhantomWalletAdapter(), new BackpackWalletAdapter()],
     []
   );
 
