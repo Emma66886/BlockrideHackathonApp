@@ -48,6 +48,10 @@ export default function DashBoardLayout() {
 
 const Header = styled.div`
   margin: 0 65px 0 65px;
+  position: sticky;
+  top: 0;
+  height: 64px;
+  z-index: 999;
   @media screen and (max-width: 921px) {
     margin: 0 20px;
   }
