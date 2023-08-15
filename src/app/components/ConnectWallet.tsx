@@ -11,6 +11,8 @@ export default function ConnectWallet(props: Props) {
   const { select, wallets, publicKey, disconnect } = useWallet();
 
   const { open, closeModal } = props;
+
+  console.log(wallets);
   return (
     <>
       <Modal
@@ -22,22 +24,17 @@ export default function ConnectWallet(props: Props) {
           <Container>
             {wallets.filter((wallet) => wallet.readyState === "Installed")
               .length > 0 ? (
-              wallets
-                .filter((wallet) => wallet.readyState === "Installed")
-                .map((wallet, i) => {
-                  return (
-                    <List
-                      key={wallet.adapter.name}
-                      onClick={() => select(wallet.adapter.name)}
-                    >
-                      <img
-                        src={wallet.adapter.icon}
-                        alt={wallet.adapter.name}
-                      />
-                      <p>{wallet.adapter.name}</p>
-                    </List>
-                  );
-                })
+              wallets.map((wallet) => {
+                return (
+                  <List
+                    key={wallet.adapter.name}
+                    onClick={() => select(wallet.adapter.name)}
+                  >
+                    <img src={wallet.adapter.icon} alt={wallet.adapter.name} />
+                    <p>{wallet.adapter.name}</p>
+                  </List>
+                );
+              })
             ) : (
               <p>No wallets found</p>
             )}
@@ -56,6 +53,7 @@ export default function ConnectWallet(props: Props) {
 const Container = styled.div`
   padding: 20px 30px 20px 30px;
   display: flex;
+  /* flex-wrap: wrap; */
   gap: 20px;
 `;
 

@@ -14,6 +14,7 @@ import {
   PhantomWalletAdapter,
   SolflareWalletAdapter,
   MathWalletAdapter,
+  BackpackWalletAdapter,
 } from "@solana/wallet-adapter-wallets";
 import { clusterApiUrl } from "@solana/web3.js";
 
@@ -26,6 +27,7 @@ function App() {
       new SolflareWalletAdapter(),
       new GlowWalletAdapter(),
       new MathWalletAdapter(),
+      new BackpackWalletAdapter(),
     ],
     []
   );
