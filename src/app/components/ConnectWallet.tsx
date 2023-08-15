@@ -26,7 +26,13 @@ export default function ConnectWallet(props: Props) {
               return (
                 <List
                   key={wallet.adapter.name}
-                  onClick={() => select(wallet.adapter.name)}
+                  onClick={() => {
+                    wallet.readyState !== "Installed"
+                      ? window.open(
+                          `https://www.${wallet.adapter.name.toLowerCase()}.app`
+                        )
+                      : select(wallet.adapter.name);
+                  }}
                 >
                   <img src={wallet.adapter.icon} alt={wallet.adapter.name} />
                   <p>{wallet.adapter.name}</p>
