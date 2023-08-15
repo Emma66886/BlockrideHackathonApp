@@ -1,4 +1,5 @@
 import { Menu } from "@headlessui/react";
+import { useWallet } from "@solana/wallet-adapter-react";
 import useModalState from "app/hooks/useModalState";
 import { NavLink } from "react-router-dom";
 import { styled } from "twin.macro";
@@ -8,6 +9,8 @@ import ConnectWallet from "./ConnectWallet";
 
 export default function MyMenu() {
   const { isOpen, closeModal, openModal } = useModalState();
+
+  const { publicKey } = useWallet();
 
   return (
     <Menu>
@@ -23,7 +26,8 @@ export default function MyMenu() {
         </Menu.Item>
         <Menu.Item>
           <button className="button" onClick={openModal}>
-            Connect Wallet
+            {" "}
+            {publicKey ? "Disconnect Wallet" : "Connect Wallet"}
           </button>
         </Menu.Item>
       </Menu.Items>
