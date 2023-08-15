@@ -22,22 +22,17 @@ export default function ConnectWallet(props: Props) {
       >
         {!publicKey ? (
           <Container>
-            {wallets.filter((wallet) => wallet.readyState === "Installed")
-              .length > 0 ? (
-              wallets.map((wallet) => {
-                return (
-                  <List
-                    key={wallet.adapter.name}
-                    onClick={() => select(wallet.adapter.name)}
-                  >
-                    <img src={wallet.adapter.icon} alt={wallet.adapter.name} />
-                    <p>{wallet.adapter.name}</p>
-                  </List>
-                );
-              })
-            ) : (
-              <p>No wallets found</p>
-            )}
+            {wallets.map((wallet) => {
+              return (
+                <List
+                  key={wallet.adapter.name}
+                  onClick={() => select(wallet.adapter.name)}
+                >
+                  <img src={wallet.adapter.icon} alt={wallet.adapter.name} />
+                  <p>{wallet.adapter.name}</p>
+                </List>
+              );
+            })}
           </Container>
         ) : (
           <Disconnect>
