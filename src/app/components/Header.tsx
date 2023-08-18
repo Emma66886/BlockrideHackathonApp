@@ -19,10 +19,10 @@ export default function DashBoardLayout() {
       <Header>
         <div className="content">
           <div className="nav">
-            <Logo />
-
+            
+            <Link to="/"><Logo /></Link>
             <div>
-              <Link to="/">Marketplace</Link>
+              <Link to="/Marketplace">Marketplace</Link>
               <Link to="/">Dashboard</Link>
             </div>
           </div>
