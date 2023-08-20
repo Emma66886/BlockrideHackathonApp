@@ -1,65 +1,84 @@
-import React from "react";
-import Blockride from "../../../assets/images/Blockride.png";
+import All from "./All";
+import Latest from "./Latest";
+import Soldout from "./Soldout";
+import { useState } from "react";
 
 function SectionTwo() {
 
+
+const show = ["flex"]
+const hide = ["hidden"]
+
+
+const [state, setState] = useState(show)
+const [state2, setState2] = useState(hide)
+const [state3, setState3] = useState(hide)
+
+
+const function1 = () => {
+  setState(show)
+  setState2(hide)
+  setState3(hide)
+}
+
+const function2 = () => {
+  setState(hide)
+  setState2(show)
+  setState3(hide)
+}
+
+const function3 = () => {
+  setState(hide)
+  setState2(hide)
+  setState3(show)
+}
+
   
+const Tab1 = () => (
+  <div className={`${state} flex-wrap justify-around`}>
+<All/>  </div>
+  
+)
+const Tab2 = () => (
+  <div className={`${state2} flex flex-wrap justify-around`}>
+<Latest/> </div>
+ 
+)
+const Tab3 = () => (
+  <div className={`${state3} flex flex-wrap justify-around`}>
+<Soldout/> </div>
+)
+
 
   return (
+    <>
+
+
     <div className="flex flex-col  m-11">
-      <div className="border   flex">
-        <p className="text-[14px] lg:text-[16px] lg:w-[652px] text-gray-400 font-normal leading-none mb-6">
+      <div className=" lg:mx-20   flex items-center">
+      <button onClick={()=>{function1()}} className="text-[14px] lg:text-[16px] mr-4 lg:mx-10 text-gray-400 font-normal leading-none mb-6">
           All
-        </p>
+        </button>
+      <button onClick={()=>{function2()}} className="text-[14px] lg:text-[16px] mr-4 lg:mx-20 text-gray-400 font-normal leading-none mb-6">
+          Latest
+        </button>
+      <button onClick={()=>{function3()}} className="text-[14px] lg:text-[16px] mr-4 lg:mx-20 text-gray-400 font-normal leading-none mb-6">
+          Sold out
+        </button>
       </div>
+      
 
-      <div className="container border rounded">
-        <div className="topsection flex justify-between">
-          <div className="leftinfo flex">
-            <div className="assetlogo ">
-              <img src={Blockride} alt="" className="w-14" />
-            </div>
-            <div className="ratingbox ml-8">
-              <p className="title text-white text-[16px] font-medium leading-tight">
-                Blockride
-              </p>
-              <p className="overallrating w-auto text-neutral-500 text-[10px] font-normal leading-tight">
-                Overall Rating
-              </p>
-              <div className="rating">...</div>
-            </div>
-          </div>
+     <Tab1/>
+     <Tab2/>
+     <Tab3/>
 
-          <div className="rightactive w-14 h-6 bg-gradient-to-r from-amber-500 to-red-600 rounded-sm justify-center items-center inline-flex">
-            <div className="text-white text-xs font-medium">Active</div>
-          </div>
-        </div>
+     
 
-        <div className="section2">
-          <div className="w-auto h-auto flex-col justify-start items-start inline-flex">
-           
-              <div className="text-white text-[27px] font-normal leading-loose">
-                Yutong E9
-              </div>
-            <div className="w-auto justify-between items-center gap-2 inline-flex">
-              <div className=" text-zinc-100 text-[12px] font-normal leading-7">
-                22 seats
-              </div>
-              <div className="w-1 h-1 bg-zinc-100 rounded-full" />
-              <div className="text-zinc-100 text-[12px] font-normal leading-7">
-                E-Coach
-              </div>
-              <div className="w-1 h-1 bg-zinc-100 rounded-full" />
-              <div className="text-zinc-100 text-[12px] font-normal leading-7">
-                8940*2420*3295
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      
     </div>
+
+    </>
   );
-  
 }
 
 export default SectionTwo;
