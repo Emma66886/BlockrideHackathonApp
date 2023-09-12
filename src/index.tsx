@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { Global } from "@emotion/react";
 import { GlobalStyles as BaseStyles } from "twin.macro";
 import reportWebVitals from "./reportWebVitals";
+import "./index.css"
 
 import App from "app";
 
