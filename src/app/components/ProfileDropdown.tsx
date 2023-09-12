@@ -3,9 +3,15 @@ import tw, { styled } from "twin.macro";
 import { Popover, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
 
-import { ReactComponent as CancelIcon } from "app/assets/icons/cancel.svg";
+import { useWallet } from "@solana/wallet-adapter-react";
+
+import { ReactComponent as Switch } from "app/assets/icons/switch.svg";
+
+import Avatar from "app/assets/icons/avatar.png";
 
 export default function ProfileDropdown() {
+  const { disconnect, publicKey } = useWallet();
+
   return (
     <Popover tw="relative flex">
       {({ open, close }) => (
@@ -15,11 +21,9 @@ export default function ProfileDropdown() {
               src={profile.avatar ?? DEFAULT_PROFILE_IMG}
               alt={fullname}
               css={[open && tw`mobile:hidden`]}
-            />
+            /> */}
 
-            <CancelIcon css={[tw`hidden`, open && tw`mobile:inline-block`]} /> */}
-
-            <p>Blockride</p>
+            <img src={Avatar} alt={Avatar} />
           </Popover.Button>
 
           {/* @ts-ignore */}
@@ -47,29 +51,25 @@ export default function ProfileDropdown() {
               leaveTo="transform scale-95 opacity-0"
             >
               <Popover.Panel as={Dropdown}>
+                <div className="divider" tw="py-[16px]">
+                  <DropdownLink as={Link}>MarketPlace</DropdownLink>
+
+                  <DropdownLink as={Link}>DashBoard</DropdownLink>
+                </div>
                 <div tw="flex flex-col items-center pb-[16px]">
                   {/* <img
                     src={profile.avatar ?? DEFAULT_PROFILE_IMG}
                     alt={fullname}
                   /> */}
+                  <div className="walletdet">
+                    <p>Wallet:</p>
+                    <span>{publicKey?.toBase58()}</span>
+                  </div>
 
-                  <p>Blockride</p>
-
-                  <p>Blockride</p>
-                </div>
-
-                <div className="divider" tw="py-[16px]">
-                  <DropdownLink as={Link} onClick={close}>
-                    Profile
-                  </DropdownLink>
-
-                  <DropdownLink
-                    href="https://support.busha.co/en/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Help center
-                  </DropdownLink>
+                  <Tile onClick={disconnect}>
+                    <Switch />
+                    <p>Disconnect Wallet</p>
+                  </Tile>
                 </div>
               </Popover.Panel>
             </Transition.Child>
@@ -79,6 +79,21 @@ export default function ProfileDropdown() {
     </Popover>
   );
 }
+
+const Tile = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  p {
+    font-size: 14px;
+    font-weight: 500;
+  }
+`;
 
 const Container = styled.button`
   ${tw`flex items-center cursor-pointer outline-none`};
@@ -109,14 +124,45 @@ const Overlay = styled.div`
 
 const Dropdown = styled.div`
   ${positionStyles};
-  ${tw`mt-[22px] mobile:mt-[14px] w-[375px] mobile:w-screen`};
+  ${tw`mt-[22px] mobile:mt-[14px] w-[230px] mobile:w-screen`};
 
-  ${tw`rounded-[8px] mobile:rounded-t-none rounded-b-[8px] bg-black p-[16px] mr-[16px] mobile:mr-0`};
+  ${tw`rounded-[8px] mobile:rounded-t-none rounded-b-[8px] bg-black p-[16px] mr-[16px]`};
   border: 1px solid #fff;
 
   img {
     ${tw`w-[64px] h-[64px] rounded-full object-cover`};
   }
+
+  .walletdet {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    p {
+      font-size: 14px;
+      font-weight: 500;
+    }
+    span {
+      ${tw`truncate`};
+      font-size: 14px;
+      font-weight: 500;
+
+      display: block;
+    }
+  }
+
+  .divider {
+    display: none;
+    flex-direction: column;
+    @media screen and (max-width: 519px) {
+      display: flex;
+    }
+  }
 `;
 
-const DropdownLink = styled.a<{ to?: string }>``;
+const DropdownLink = styled.a<{ to?: string }>`
+  font-size: 14px;
+  font-weight: 500;
+  padding: 5px 0;
+`;

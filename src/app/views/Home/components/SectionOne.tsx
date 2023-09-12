@@ -2,9 +2,10 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import ConnectWallet from "app/components/ConnectWallet";
 import useModalState from "app/hooks/useModalState";
 import { styled } from "twin.macro";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
 export default function SectionOne() {
-  const { isOpen, closeModal, openModal } = useModalState();
+  const { isOpen, closeModal } = useModalState();
   const { publicKey } = useWallet();
 
   return (
@@ -16,7 +17,7 @@ export default function SectionOne() {
         <p>Own a piece of your commute!</p>
         <div className="actions">
           {publicKey ? null : (
-            <button onClick={openModal}>Connect Wallet</button>
+            <WalletMultiButton>Connect Wallet</WalletMultiButton>
           )}
 
           <button>Marketplace</button>

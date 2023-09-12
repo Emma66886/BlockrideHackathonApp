@@ -14,6 +14,7 @@ import {
   BackpackWalletAdapter,
 } from "@solana/wallet-adapter-wallets";
 import { clusterApiUrl } from "@solana/web3.js";
+import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 
 import Routes from "./routes";
 
@@ -25,14 +26,18 @@ function App() {
 
   const endpoint = useMemo(() => clusterApiUrl("mainnet-beta"), []);
 
+  require("@solana/wallet-adapter-react-ui/styles.css");
+
   return (
     <ConnectionProvider endpoint={endpoint}>
       <WalletProvider wallets={wallets} autoConnect>
-        <HistoryRouter
-          history={history as unknown as HistoryRouterProps["history"]}
-        >
-          <Routes />
-        </HistoryRouter>
+        <WalletModalProvider>
+          <HistoryRouter
+            history={history as unknown as HistoryRouterProps["history"]}
+          >
+            <Routes />
+          </HistoryRouter>
+        </WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider>
   );
