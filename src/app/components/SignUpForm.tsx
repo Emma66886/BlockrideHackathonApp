@@ -1,12 +1,40 @@
 import { useWallet } from "@solana/wallet-adapter-react";
-import React from "react";
+import React, { FormEvent, useState } from "react";
 import { styled } from "twin.macro";
 
-export default function SignUpForm() {
+import { registerUser } from "app/api/auth";
+
+interface Props {
+  signature: string;
+  closeModal: () => void;
+}
+
+export default function SignUpForm(props: Props) {
   const { publicKey } = useWallet();
 
-  const signUp = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { signature, closeModal } = props;
+
+  const [username, setUsername] = useState("");
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const signUp = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
+    registerUser({
+      signature,
+      pubkey: publicKey?.toBase58() as string,
+      username,
+    })
+      .then(() => {
+        setIsLoading(false);
+        closeModal();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value);
   };
 
   return (
@@ -14,10 +42,16 @@ export default function SignUpForm() {
       <div className="header">
         <h2>Get started with an account.</h2>
       </div>
-      <form onSubmit={() => signUp}>
+      <form onSubmit={(e) => signUp(e)}>
         <div>
           <label>Username</label>
-          <input type="text" placeholder="Enter a username" required />
+          <input
+            type="text"
+            placeholder="Enter a username"
+            onChange={handleUsernameChange}
+            value={username}
+            required
+          />
           <span>Username can’t be changed</span>
         </div>
         <div>
@@ -25,7 +59,7 @@ export default function SignUpForm() {
           <input type="text" readOnly placeholder={publicKey?.toBase58()} />
         </div>
 
-        <button>Submit Profile</button>
+        <button>{isLoading ? "Please Wait..." : "Submit Profile"}</button>
       </form>
     </Container>
   );

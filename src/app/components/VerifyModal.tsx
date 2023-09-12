@@ -4,6 +4,8 @@ import tw, { styled } from "twin.macro";
 import Modal from "./Modal";
 
 import { verifyWallet } from "app/api/auth/index";
+import { useState } from "react";
+import SignUpForm from "./SignUpForm";
 
 interface Props {
   open: boolean;
@@ -13,21 +15,23 @@ interface Props {
 export default function VerifyModal(props: Props) {
   const { open, closeModal } = props;
 
-  //   const [signature, setSignature] = useState("");
+  const [verify, setVerify] = useState<boolean>();
+
+  const [signature, setSignature] = useState("");
 
   const { signMessage: sign, publicKey } = useWallet();
 
   const signMessage = () => {
     const message = new TextEncoder().encode(
-      "Kindly sign this message,it cost no money, just to verify ownership of this wallet"
+      "Kindly sign this message, it cost no money!!!, just to verify ownership of this wallet!"
     );
     sign!(message)
       .then((res) => {
         // setSignature(bs58.encode(res));
         console.log(publicKey?.toBase58());
-        console.log(bs58.encode(res));
+        setSignature(bs58.encode(res));
         verifyWallet(bs58.encode(res), publicKey?.toBase58() as string).then(
-          (res) => console.log(res)
+          () => setVerify(true)
         );
       })
       .catch((res) => console.log(res));
@@ -35,18 +39,22 @@ export default function VerifyModal(props: Props) {
 
   return (
     <Modal open={open} onClose={closeModal} tw="max-h-full">
-      <ModalContent>
-        <div>
-          <h1>Verify Wallet</h1>
-          <p>{publicKey?.toBase58()}</p>
-        </div>
+      {verify ? (
+        <SignUpForm signature={signature} closeModal={closeModal} />
+      ) : (
+        <ModalContent>
+          <div>
+            <h1>Verify Wallet</h1>
+            <p>{publicKey?.toBase58()}</p>
+          </div>
 
-        <p>Verify Wallet to prove ownership. No SOL will be charged</p>
-        <div className="action">
-          <button onClick={closeModal}>Cancel</button>
-          <button onClick={() => signMessage()}>Verify Wallet</button>
-        </div>
-      </ModalContent>
+          <p>Verify Wallet to prove ownership. No SOL will be charged</p>
+          <div className="action">
+            <button onClick={closeModal}>Cancel</button>
+            <button onClick={() => signMessage()}>Verify Wallet</button>
+          </div>
+        </ModalContent>
+      )}
     </Modal>
   );
 }
