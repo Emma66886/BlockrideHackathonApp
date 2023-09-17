@@ -2,6 +2,7 @@
   "name": "blockride-app",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://blockride-backend.vercel.app/",
   "dependencies": {
     "@craco/craco": "^7.1.0",
     "@emotion/babel-preset-css-prop": "^11.11.0",

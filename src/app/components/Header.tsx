@@ -1,5 +1,5 @@
 import { styled } from "twin.macro";
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
 import { ReactComponent as Logo } from "app/assets/icons/logo.svg";
 
@@ -29,8 +29,9 @@ export default function DashBoardLayout() {
       <Header>
         <div className="content">
           <div className="nav">
-            
-            <Link to="/"><Logo /></Link>
+            <Link to="/">
+              <Logo />
+            </Link>
             <div>
               <Link to="/Marketplace">Marketplace</Link>
               <Link to="/">Dashboard</Link>
@@ -56,6 +57,17 @@ export default function DashBoardLayout() {
     </>
   );
 }
+
+const Link = styled(NavLink)`
+  font-size: 16px;
+  font-weight: 400;
+  color: #9ea5ac;
+  text-decoration: none;
+
+  &.active {
+    color: #fff;
+  }
+`;
 
 const Header = styled.div`
   margin: 0 65px 0 65px;
@@ -102,6 +114,10 @@ const Header = styled.div`
           font-weight: 400;
           color: #9ea5ac;
           text-decoration: none;
+
+          &.active {
+            color: #fff;
+          }
         }
       }
       svg {

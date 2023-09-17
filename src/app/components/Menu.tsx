@@ -19,7 +19,7 @@ export default function MyMenu() {
       </Menu.Button>
       <Menu.Items as={Overlay}>
         <Menu.Item>
-          <NavLink to="">Marketplace</NavLink>
+          <NavLink to="/Marketplace">Marketplace</NavLink>
         </Menu.Item>
         <Menu.Item>
           <NavLink to="">Dashboard</NavLink>

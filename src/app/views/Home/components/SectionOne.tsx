@@ -3,10 +3,13 @@ import ConnectWallet from "app/components/ConnectWallet";
 import useModalState from "app/hooks/useModalState";
 import { styled } from "twin.macro";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { useNavigate } from "react-router-dom";
 
 export default function SectionOne() {
   const { isOpen, closeModal } = useModalState();
   const { publicKey } = useWallet();
+
+  const navigate = useNavigate();
 
   return (
     <Container>
@@ -20,7 +23,7 @@ export default function SectionOne() {
             <WalletMultiButton>Connect Wallet</WalletMultiButton>
           )}
 
-          <button>Marketplace</button>
+          <button onClick={() => navigate("/Marketplace")}>Marketplace</button>
         </div>
         <div className="pill_list">
           <div>
