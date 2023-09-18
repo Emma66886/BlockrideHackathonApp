@@ -37,7 +37,10 @@ export default function Modal(props: PropsWithChildren<Props>) {
   return (
     // @ts-ignore
     <Transition show={open} as={Fragment}>
-      <Dialog onClose={onClose} as={DialogEl}>
+      <Dialog
+        onClose={showClose ? () => onClose() : () => console.log("cant close")}
+        as={DialogEl}
+      >
         <>
           <ClassNames>
             {({ css }) => (
