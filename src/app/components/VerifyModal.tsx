@@ -3,7 +3,7 @@ import bs58 from "bs58";
 import tw, { styled } from "twin.macro";
 import Modal from "./Modal";
 
-import { verifyWallet } from "app/api/auth/index";
+import { confirmUser, verifyWallet } from "app/api/auth/index";
 import { useState } from "react";
 import SignUpForm from "./SignUpForm";
 
@@ -17,11 +17,14 @@ export default function VerifyModal(props: Props) {
 
   const [verify, setVerify] = useState<boolean>();
 
+  const [verifing, setVerifing] = useState<boolean>(false);
+
   const [signature, setSignature] = useState("");
 
   const { signMessage: sign, publicKey } = useWallet();
 
   const signMessage = () => {
+    setVerifing(true);
     const message = new TextEncoder().encode(
       "Kindly sign this message, it cost no money!!!, just to verify ownership of this wallet!"
     );
@@ -29,16 +32,37 @@ export default function VerifyModal(props: Props) {
       .then((res) => {
         // setSignature(bs58.encode(res));
         console.log(publicKey?.toBase58());
+        localStorage.setItem("sign", JSON.stringify(bs58.encode(res)));
         setSignature(bs58.encode(res));
         verifyWallet(bs58.encode(res), publicKey?.toBase58() as string).then(
-          () => setVerify(true)
+          () => {
+            confirmUser(publicKey?.toBase58() as string)
+              .then((res) => {
+                setVerify(true);
+                setVerifing(false);
+                localStorage.setItem("verified", "true");
+              })
+              .catch((res) => {
+                if (res.response.data.error === "User already exist") {
+                  closeModal();
+                  setVerifing(false);
+                  localStorage.setItem("verified", "true");
+                } else {
+                  return res;
+                }
+              });
+          }
         );
       })
       .catch((res) => console.log(res));
   };
 
+  const verified = JSON.parse(localStorage.getItem("verified") || "{}");
+
+  console.log(verified);
+
   return (
-    <Modal open={open} onClose={closeModal} tw="max-h-full">
+    <Modal open={open} onClose={closeModal} showClose={false} tw="max-h-full">
       {verify ? (
         <SignUpForm signature={signature} closeModal={closeModal} />
       ) : (
@@ -51,7 +75,9 @@ export default function VerifyModal(props: Props) {
           <p>Verify Wallet to prove ownership. No SOL will be charged</p>
           <div className="action">
             <button onClick={closeModal}>Cancel</button>
-            <button onClick={() => signMessage()}>Verify Wallet</button>
+            <button onClick={() => signMessage()} disabled={verifing}>
+              {verifing ? "Verifing" : "Verify Wallet"}
+            </button>
           </div>
         </ModalContent>
       )}

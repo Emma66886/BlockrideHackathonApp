@@ -15,6 +15,12 @@ export const verifyWallet = (signature: string, pubkey: string) => {
   });
 };
 
+export const confirmUser = (pubkey: string) => {
+  return axios.post(`/confirmuser`, {
+    pubkey,
+  });
+};
+
 export const registerUser = (data: registerData) => {
   return axios.post(`/signup`, data);
 };

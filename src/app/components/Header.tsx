@@ -19,7 +19,10 @@ export default function DashBoardLayout() {
   const { publicKey } = useWallet();
 
   useEffect(() => {
-    if (publicKey) {
+    const verified = JSON.parse(localStorage.getItem("verified") || "{}");
+    if (verified) {
+      console.log(verified);
+    } else if (!verified && publicKey) {
       openModal();
     }
   }, [openModal, publicKey]);

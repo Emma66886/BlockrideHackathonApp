@@ -66,7 +66,13 @@ export default function ProfileDropdown() {
                     <span>{publicKey?.toBase58()}</span>
                   </div>
 
-                  <Tile onClick={disconnect}>
+                  <Tile
+                    onClick={() => {
+                      localStorage.setItem("verified", "false");
+                      localStorage.removeItem("sign");
+                      disconnect();
+                    }}
+                  >
                     <Switch />
                     <p>Disconnect Wallet</p>
                   </Tile>

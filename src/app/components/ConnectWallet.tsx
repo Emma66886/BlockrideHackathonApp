@@ -43,7 +43,15 @@ export default function ConnectWallet(props: Props) {
         ) : (
           <Disconnect>
             <p>{publicKey.toBase58()}</p>
-            <button onClick={disconnect}>Disconnect wallet</button>
+            <button
+              onClick={() => {
+                localStorage.setItem("verified", "false");
+                localStorage.removeItem("sign");
+                disconnect();
+              }}
+            >
+              Disconnect wallet
+            </button>
           </Disconnect>
         )}
       </Modal>

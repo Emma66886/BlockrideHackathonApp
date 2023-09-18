@@ -1,16 +1,16 @@
 import { Menu } from "@headlessui/react";
 import { useWallet } from "@solana/wallet-adapter-react";
-import useModalState from "app/hooks/useModalState";
+// import useModalState from "app/hooks/useModalState";
 import { NavLink } from "react-router-dom";
 import { styled } from "twin.macro";
 
 import { ReactComponent as MenuIcon } from "../assets/icons/menu.svg";
-import ConnectWallet from "./ConnectWallet";
+// import ConnectWallet from "./ConnectWallet";
 
 export default function MyMenu() {
-  const { isOpen, closeModal, openModal } = useModalState();
+  // const { isOpen, closeModal, openModal } = useModalState();
 
-  const { publicKey } = useWallet();
+  const { publicKey, disconnect } = useWallet();
 
   return (
     <Menu>
@@ -24,14 +24,22 @@ export default function MyMenu() {
         <Menu.Item>
           <NavLink to="">Dashboard</NavLink>
         </Menu.Item>
-        <Menu.Item>
-          <button className="button" onClick={openModal}>
-            {" "}
-            {publicKey ? "Disconnect Wallet" : "Connect Wallet"}
-          </button>
-        </Menu.Item>
+        {publicKey && (
+          <Menu.Item>
+            <button
+              className="button"
+              onClick={() => {
+                localStorage.setItem("verified", "false");
+                localStorage.removeItem("sign");
+                disconnect();
+              }}
+            >
+              Disconnect wallet
+            </button>
+          </Menu.Item>
+        )}
       </Menu.Items>
-      <ConnectWallet open={isOpen} closeModal={closeModal} />
+      {/* <ConnectWallet open={isOpen} closeModal={closeModal} /> */}
     </Menu>
   );
 }
