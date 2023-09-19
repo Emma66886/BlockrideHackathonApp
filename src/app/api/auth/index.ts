@@ -1,4 +1,5 @@
 import axios from "axios";
+import request from "../request";
 
 type registerData = {
   signature: string;
@@ -7,7 +8,7 @@ type registerData = {
 };
 
 export const verifyWallet = (signature: string, pubkey: string) => {
-  return axios.get(`/verify`, {
+  return request.get(`/verify`, {
     params: {
       signature,
       pubkey,
