@@ -57,10 +57,6 @@ export default function VerifyModal(props: Props) {
       .catch((res) => console.log(res));
   };
 
-  const verified = JSON.parse(localStorage.getItem("verified") || "{}");
-
-  console.log(verified);
-
   return (
     <Modal open={open} onClose={closeModal} showClose={false} tw="max-h-full">
       {verify ? (

@@ -12,7 +12,6 @@ export default function ConnectWallet(props: Props) {
 
   const { open, closeModal } = props;
 
-  console.log(wallets);
   return (
     <>
       <Modal
