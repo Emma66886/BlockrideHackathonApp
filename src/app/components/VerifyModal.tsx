@@ -38,13 +38,13 @@ export default function VerifyModal(props: Props) {
           () => {
             confirmUser(publicKey?.toBase58() as string)
               .then((res) => {
-                setVerify(true);
+                closeModal();
                 setVerifing(false);
                 localStorage.setItem("verified", "true");
               })
               .catch((res) => {
-                if (res.response.data.error === "User already exist") {
-                  closeModal();
+                if (res.response.data.error === "User does not exist") {
+                  setVerify(true);
                   setVerifing(false);
                   localStorage.setItem("verified", "true");
                 } else {
@@ -86,7 +86,7 @@ export default function VerifyModal(props: Props) {
 }
 
 const ModalContent = styled.div`
-  padding: 0 82px 34px 30px;
+  padding: 20px 82px 34px 30px;
 
   display: flex;
   flex-direction: column;

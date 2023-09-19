@@ -66,7 +66,7 @@ export default function SignUpForm(props: Props) {
 }
 
 const Container = styled.div`
-  padding: 0 80px 50px 80px;
+  padding: 20px 80px 50px 80px;
 
   > .header {
     h2 {
